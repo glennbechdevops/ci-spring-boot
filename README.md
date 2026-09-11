@@ -158,6 +158,16 @@ git config --global user.name  "Ola Nordmann"
 git config --global user.email "ola@example.com"
 ```
 
+### Sørg for at Git bruker HTTPS (viktig!)
+
+Codespaces har **ingen SSH-nøkkel** installert. Hvis du havner på en `git@github.com:...`-URL vil `git push` feile med `Permission denied (publickey)`. For å unngå dette:
+
+```shell
+gh config set git_protocol https
+```
+
+Dette gjør at `gh repo create` (og andre `gh`-kommandoer som setter opp remote) alltid bruker HTTPS-URLer. Kjør kommandoen én gang før du oppretter repoet under.
+
 ### Opprett repoet og push
 
 Du har to måter å gjøre dette på. **Alternativ A** er raskest hvis du bruker `gh`.
@@ -174,13 +184,14 @@ git branch -M main
 gh repo create ci-spring-boot-<initialer> --public --source=. --push
 ```
 
-Kommandoen oppretter repoet på GitHub-kontoen din, setter det som `origin`, og pusher `main` — alt i én sving.
+Kommandoen oppretter repoet på GitHub-kontoen din, setter det som `origin` (med HTTPS-URL siden vi konfigurerte det over), og pusher `main` — alt i én sving.
 
 **Alternativ B — opprett manuelt via web:**
 
 1. Gå til [github.com/new](https://github.com/new) og opprett et **tomt** repo (ikke huk av for README, .gitignore eller lisens – prosjektet fra Initializr har allerede dette).
 2. Kall det `ci-spring-boot-<dine initialer>`.
-3. Pushe eksisterende prosjekt:
+3. På repo-siden, **kopier `HTTPS`-URLen** (ikke SSH). Den starter med `https://github.com/...`.
+4. Pushe eksisterende prosjekt:
 
 ```shell
 git init
@@ -192,26 +203,6 @@ git push -u origin main
 ```
 
 Første `push` vil trigge credential helperen (`gh` eller keychain). Har du satt opp `gh auth login`, går den rett gjennom.
-
-### Feilsøking: `Permission denied (publickey)` ved push
-
-Får du denne feilen:
-
-```
-git@github.com: Permission denied (publickey).
-fatal: Could not read from remote repository.
-```
-
-…så er remoten din satt opp med **SSH** (`git@github.com:...`), men Codespaces har ingen SSH-nøkkel installert. Fiksen er å bytte remoten til **HTTPS**:
-
-```shell
-git remote -v                                                          # sjekk gjeldende URL
-git remote set-url origin https://github.com/<brukernavn>/<repo>.git   # bytt til HTTPS
-git remote -v                                                          # verifiser
-git push -u origin main
-```
-
-Samme feil kan komme fra `gh repo create` hvis `gh` er konfigurert med SSH som protokoll. Sjekk med `gh config get git_protocol` — sett den til `https` med `gh config set git_protocol https` hvis nødvendig.
 
 ## Del 3 – Sett opp branch protection på `main`
 
