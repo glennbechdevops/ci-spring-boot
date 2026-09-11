@@ -97,14 +97,10 @@ Gå til **Spring Initializr**: [https://start.spring.io](https://start.spring.io
 
 Klikk **Generate**. Nettleseren laster ned en zip-fil som heter `ci-demo.zip`.
 
-### Legg prosjektet ved siden av fork-en (ikke inni!)
+### Legg prosjektet på plass
 
-Se advarselen om to git-repoer over. Prosjektet skal legges i `/workspaces/ci-demo/`, **sidestilt** med `/workspaces/ci-spring-boot/` — ikke inne i fork-en.
-
-Explorer-panelet i Codespaces viser bare fork-en, så du kan ikke drage rett inn i `/workspaces/`. Slipp zip-en i fork-mappa, flytt den ett hakk opp i terminalen, og pakk ut:
-
-1. **Drag & drop** `ci-demo.zip` fra nedlastings-mappa inn i Explorer-panelet i Codespace-vinduet. Fila havner i `/workspaces/ci-spring-boot/ci-demo.zip`.
-2. Flytt zip-en ut av fork-en og pakk ut i terminalen:
+1. **Drag & drop** `ci-demo.zip` fra nedlastings-mappa inn i Explorer-panelet i Codespace-vinduet.
+2. Flytt den til `/workspaces/` og pakk ut:
 
    ```shell
    mv /workspaces/ci-spring-boot/ci-demo.zip /workspaces/
@@ -113,7 +109,7 @@ Explorer-panelet i Codespaces viser bare fork-en, så du kan ikke drage rett inn
    cd ci-demo
    ```
 
-3. Bekreft at det ligger `pom.xml`, `mvnw` og `src/` inne i `/workspaces/ci-demo/`.
+3. Bekreft at `pom.xml`, `mvnw` og `src/` ligger i `/workspaces/ci-demo/`.
 
 > **Pro tips:** Vil du hoppe over nettleser-runden, kan du hente prosjektet direkte i Codespaces-terminalen med `curl` mot Initializr sitt API. `-d`-flaggene sender de samme feltene som du fyller inn i Initializr-web-en (som HTTP form data), og uten `bootVersion` bruker Initializr default (siste stabile).
 
