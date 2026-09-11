@@ -20,6 +20,31 @@ Etter å ha fullført øvelsen skal du kunne:
 * Lage en **Pull Request**, be om review, og merge etter godkjenning
 * Skrive en enkel **GitHub Actions workflow** som bygger og tester et Maven-prosjekt
 
+## ⚠️ Viktig: Vi jobber med to Git-repoer i denne øvingen
+
+Dette er en klassisk felle som *kommer* til å forvirre deg om du ikke er obs på det fra start. I løpet av øvingen jobber du med **to helt separate GitHub-repoer**, som ligger i to forskjellige mapper:
+
+| # | Repo | Mappe (i Codespace) | Hva ligger her? |
+|---|------|---------------------|-----------------|
+| 1 | **Din fork av dette repoet** (`ci-spring-boot`) | `/workspaces/ci-spring-boot/` | README-en du leser nå, `.devcontainer/`, og eksempel-workflowen. **Dette pusher du _ikke_ endringer til.** |
+| 2 | **Ditt nye Spring Boot-repo** (`ci-spring-boot-<initialer>`) | `/workspaces/ci-spring-boot/ci-demo/` (eller lignende, alt etter hvor du pakket ut zip-fila) | Selve Spring Boot-prosjektet du lager i Del 1. **Det er her all koden din, PR-ene, branch protection og CI skal leve.** |
+
+**Konsekvenser du må være våken på:**
+
+* Når du kjører `git`-kommandoer, må du stå i **riktig mappe**. `git status` inne i `ci-demo/` snakker om repo 2. `git status` ett hakk opp snakker om repo 1.
+* Første gang du kjører `git init` inne i `ci-demo/`, lager du et **nytt, uavhengig** git-repo — det arver ingenting fra fork-en. Det er akkurat det vi vil.
+* `.github/workflows/ci.yml` du lager i Del 5 skal ligge i **repo 2**, ikke i fork-en.
+* `gh repo create ...` i Del 2 lager en helt ny GitHub-repo — ikke bland det sammen med fork-en.
+
+**Sjekk hvor du er før du gjør noe med Git:**
+
+```shell
+pwd                # Hvilken mappe står jeg i?
+git remote -v      # Hvilket GitHub-repo peker denne mappa på?
+```
+
+Ser du `github.com:<lærer>/ci-spring-boot` i output, er du i fork-en. Ser du `github.com:<deg>/ci-spring-boot-<initialer>`, er du i ditt eget repo.
+
 ## Lag en fork
 
 Du må starte med å lage en fork av dette repoet til din egen GitHub-konto. Bruk **Fork**-knappen øverst til høyre på GitHub.
