@@ -33,7 +33,7 @@ Dette er en klassisk felle som *kommer* til å forvirre deg om du ikke er obs p�
 | # | Repo | Mappe | Hva ligger her? |
 |---|------|-------|-----------------|
 | 1 | **Din fork** (`ci-spring-boot`) | `/workspaces/ci-spring-boot/` | README-en du leser nå, `.devcontainer/`, og eksempel-workflowen. **Ikke push endringer hit.** |
-| 2 | **Ditt nye Spring Boot-repo** (`ci-spring-boot-<initialer>`) | `/workspaces/ci-demo/` | Selve Spring Boot-prosjektet du lager i Del 1. **Det er her all koden din, PR-ene, branch protection og CI skal leve.** |
+| 2 | **Ditt nye Spring Boot-repo** (f.eks. `ci-spring-boot-ola`) | `/workspaces/ci-demo/` | Selve Spring Boot-prosjektet du lager i Del 1. **Det er her all koden din, PR-ene, branch protection og CI skal leve.** |
 
 Legger du Spring Boot-prosjektet **inne i** fork-en, går git-kommandoene lett til feil repo — git leter oppover i mappetreet og treffer fork-ens `.git/` uten at du merker det. Hold repo 2 utenfor repo 1. Del 1 forteller deg hvor du skal legge det (`/workspaces/ci-demo/`).
 
@@ -44,7 +44,7 @@ pwd                # Hvilken mappe står jeg i?
 git remote -v      # Hvilket GitHub-repo peker denne mappa på?
 ```
 
-Ser du `github.com:<lærer>/ci-spring-boot` i output, er du i fork-en. Ser du `github.com:<deg>/ci-spring-boot-<initialer>`, er du i ditt eget repo. Ser du **ingenting** i `git remote -v` fra `ci-demo/` før du har lagt til remote — det er som forventet.
+Ser du en URL med `glennbechdevops/ci-spring-boot` (lærerens repo), er du i fork-en. Ser du en URL med **ditt eget** brukernavn og repo-navnet du valgte, er du i ditt eget repo. Ser du **ingenting** i `git remote -v` fra `ci-demo/` før du har lagt til remote — det er som forventet.
 
 ## Lag en fork
 
@@ -179,10 +179,10 @@ git init
 git add .
 git commit -m "Initial commit from Spring Initializr"
 git branch -M main
-gh repo create ci-spring-boot-<initialer> --public --source=. --push
+gh repo create ci-spring-boot-ditt-navn --public --source=. --push
 ```
 
-Kommandoen oppretter repoet på GitHub-kontoen din, setter det som `origin`, og pusher `main` — alt i én sving.
+Bytt `ditt-navn` med noe unikt (f.eks. `ci-spring-boot-ola`). Kommandoen oppretter repoet på GitHub-kontoen din, setter det som `origin`, og pusher `main` — alt i én sving.
 
 ## Del 3 – Sett opp branch protection på `main`
 
