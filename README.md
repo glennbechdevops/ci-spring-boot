@@ -11,6 +11,8 @@ I denne øvingen skal du:
 
 Målet er ikke å lære Spring Boot i dybden – vi bruker det kun som et konkret prosjekt å bygge og teste. Fokuset er på **arbeidsflyten** rundt kode: branching, code review, og kontinuerlig integrasjon (CI).
 
+Underveis kommer vi til å bruke **GitHub CLI (`gh`)** til å autentisere Git og opprette repoer fra terminalen, og noen litt mer avanserte **Codespaces**-triks — blant annet å legge til flere rot-mapper i workspacet så du kan jobbe med to prosjekter side om side i samme editor.
+
 ## Læringsmål
 
 Etter å ha fullført øvingen skal du kunne:
@@ -19,6 +21,8 @@ Etter å ha fullført øvingen skal du kunne:
 * Sette opp **branch protection rules** for å hindre direkte push til `main`
 * Lage en **Pull Request**, be om review, og merge etter godkjenning
 * Skrive en enkel **GitHub Actions workflow** som bygger og tester et Maven-prosjekt
+* Bruke **GitHub CLI (`gh`)** til å logge inn og opprette et nytt repo fra kommandolinjen (`gh auth login`, `gh repo create`)
+* Bruke **Codespaces multi-root workspaces** (`code -a`) for å jobbe med flere mapper samtidig i samme editor-vindu
 
 ## Viktig: Vi jobber med to Git-repoer i denne øvingen — hold dem adskilt!
 
