@@ -128,20 +128,6 @@ code -a /workspaces/ci-demo
 
 `-a` er kortformen for `--add` — den *legger til* mappa i workspacet uten å bytte hovedmappe eller reloade vinduet. Nå ser du begge mappene sidestilt i Explorer, og kan åpne filer i `ci-demo/` med musa som normalt.
 
-### Verifiser at du står i riktig mappe
-
-```shell
-pwd
-# skal si: /workspaces/ci-demo
-
-ls -la
-# skal vise pom.xml, mvnw, src/  — men INGEN .git/ (kommer i Del 2)
-
-git rev-parse --show-toplevel 2>&1
-# skal si: "fatal: not a git repository" — det er riktig, vi lager repoet i Del 2.
-# Sier den derimot "/workspaces/ci-spring-boot", har du havnet inne i fork-en. Flytt prosjektet ut før du fortsetter.
-```
-
 ### Verifiser at prosjektet bygger
 
 ```shell
