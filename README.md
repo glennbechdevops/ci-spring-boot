@@ -150,8 +150,6 @@ Før du kan pushe kode, må Git kunne bevise til GitHub at det er *deg* som push
 > ```shell
 > unset GITHUB_TOKEN
 > ```
->
-> Kjenner du igjen meldingen «The value of the GITHUB_TOKEN environment variable is being used for authentication», er det denne du må fjerne.
 
 ```shell
 gh auth login
