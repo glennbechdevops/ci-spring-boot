@@ -53,7 +53,7 @@ Gå til **Spring Initializr**: [https://start.spring.io](https://start.spring.io
 * **Project**: Maven
 * **Language**: Java
 * **Spring Boot**: siste stabile versjon (unngå SNAPSHOT/RC)
-* **Group**: `no.hiof.<ditt-brukernavn>` (eller noe tilsvarende)
+* **Group**: `no.kristiania`
 * **Artifact**: `ci-demo`
 * **Packaging**: Jar
 * **Java**: 21 (eller den versjonen som er tilgjengelig i Codespaces)
@@ -66,8 +66,8 @@ Klikk **Generate** og last ned zip-fila.
 > ```shell
 > curl https://start.spring.io/starter.zip \
 >   -d type=maven-project -d language=java -d bootVersion=3.3.4 \
->   -d groupId=no.hiof.cidemo -d artifactId=ci-demo \
->   -d name=ci-demo -d packageName=no.hiof.cidemo \
+>   -d groupId=no.kristiania.cidemo -d artifactId=ci-demo \
+>   -d name=ci-demo -d packageName=no.kristiania.cidemo \
 >   -d javaVersion=21 -d dependencies=web \
 >   -o ci-demo.zip && unzip ci-demo.zip -d ci-demo
 > ```
@@ -134,7 +134,7 @@ Gjør det samme andre veien – la medstudenten invitere deg til sitt repo.
 2. Legg til en enkel REST-endpoint i prosjektet. For eksempel en ny klasse `HelloController.java`:
 
    ```java
-   package no.hiof.cidemo;
+   package no.kristiania.cidemo;
 
    import org.springframework.web.bind.annotation.GetMapping;
    import org.springframework.web.bind.annotation.RestController;
