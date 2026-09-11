@@ -86,18 +86,85 @@ Du skal få en grønn build med minst én test (`contextLoads`) som passerer.
 
 ## Del 2 – Opprett et nytt GitHub-repo
 
-1. Gå til [github.com/new](https://github.com/new) og opprett et **tomt** repo (ikke huk av for README, .gitignore eller lisens – prosjektet fra Initializr har allerede dette).
-2. Kall det `ci-spring-boot-<dine initialer>`.
-3. Følg instruksjonene GitHub gir for å pushe et eksisterende prosjekt:
+### Autentisering mot GitHub (viktig!)
+
+Før du kan pushe kode, må Git kunne bevise til GitHub at det er *deg* som pusher. I et helt fersk Codespace har du **ikke** SSH-nøkler satt opp, og passord-innlogging over HTTPS ble skrudd av av GitHub for flere år siden. Derfor må du bruke ett av alternativene under.
+
+**Anbefalt (Codespaces og lokalt): bruk `gh` CLI**
+
+`gh` (GitHub CLI) er forhåndsinstallert i Codespaces og på de fleste utviklermaskiner.
+
+```shell
+gh auth login
+```
+
+Velg:
+* **GitHub.com**
+* **HTTPS** som protokoll
+* **Yes** når den spør om å bruke `gh` som Git credential helper
+* **Login with a web browser** — kopier engangskoden og lim inn i nettleseren
+
+Etter dette har Git en credential helper som automatisk sender en gyldig token ved hver `git push` — du slipper å taste noe mer.
+
+**Alternativ: Personal Access Token (PAT)**
+
+Hvis du foretrekker å ikke bruke `gh`:
+
+1. Gå til [github.com/settings/tokens](https://github.com/settings/tokens) → **Generate new token (classic)**.
+2. Gi den scope `repo`.
+3. Kopier tokenet (du får se det bare én gang).
+4. Ved neste `git push` bruker du **brukernavnet ditt** og **tokenet i stedet for passord**.
+5. Slå på credential-cache så du slipper å taste den hver gang:
+
+   ```shell
+   git config --global credential.helper store   # lagrer i klartekst i ~/.git-credentials
+   # eller på Mac:
+   git config --global credential.helper osxkeychain
+   ```
+
+> **NB:** SSH (`git@github.com:...`) fungerer også — men krever at du har generert et SSH-nøkkelpar (`ssh-keygen`) og lagt den offentlige nøkkelen inn på GitHub-kontoen din under `Settings → SSH and GPG keys`. Dette er ikke satt opp i et ferskt Codespace.
+
+### Sett git-identiteten din (bare første gang)
+
+```shell
+git config --global user.name  "Ola Nordmann"
+git config --global user.email "ola@example.com"
+```
+
+### Opprett repoet og push
+
+Du har to måter å gjøre dette på. **Alternativ A** er raskest hvis du bruker `gh`.
+
+**Alternativ A — la `gh` opprette og pushe i én kommando:**
+
+Fra rot-mappa av Spring-prosjektet:
 
 ```shell
 git init
 git add .
 git commit -m "Initial commit from Spring Initializr"
 git branch -M main
-git remote add origin git@github.com:<ditt-brukernavn>/ci-spring-boot-<initialer>.git
+gh repo create ci-spring-boot-<initialer> --public --source=. --push
+```
+
+Kommandoen oppretter repoet på GitHub-kontoen din, setter det som `origin`, og pusher `main` — alt i én sving.
+
+**Alternativ B — opprett manuelt via web:**
+
+1. Gå til [github.com/new](https://github.com/new) og opprett et **tomt** repo (ikke huk av for README, .gitignore eller lisens – prosjektet fra Initializr har allerede dette).
+2. Kall det `ci-spring-boot-<dine initialer>`.
+3. Pushe eksisterende prosjekt:
+
+```shell
+git init
+git add .
+git commit -m "Initial commit from Spring Initializr"
+git branch -M main
+git remote add origin https://github.com/<ditt-brukernavn>/ci-spring-boot-<initialer>.git
 git push -u origin main
 ```
+
+Første `push` vil trigge credential helperen (`gh` eller keychain). Har du satt opp `gh auth login`, går den rett gjennom.
 
 ## Del 3 – Sett opp branch protection på `main`
 
