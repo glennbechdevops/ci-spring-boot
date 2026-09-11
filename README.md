@@ -23,6 +23,7 @@ Etter å ha fullført øvingen skal du kunne:
 * Skrive en enkel **GitHub Actions workflow** som bygger og tester et Maven-prosjekt
 * Bruke **GitHub CLI (`gh`)** til å logge inn og opprette et nytt repo fra kommandolinjen (`gh auth login`, `gh repo create`)
 * Bruke **Codespaces multi-root workspaces** (`code -a`) for å jobbe med flere mapper samtidig i samme editor-vindu
+* Forstå hva **Maven Wrapper** (`./mvnw`) er, og hvorfor det gjør builds mer reproduserbare på tvers av maskiner og CI-systemer
 
 ## Viktig: Vi jobber med to Git-repoer i denne øvingen — hold dem adskilt!
 
@@ -148,6 +149,8 @@ git rev-parse --show-toplevel 2>&1
 ```
 
 Du skal få en grønn build med minst én test (`contextLoads`) som passerer.
+
+> **Hva er `./mvnw`?** Det er **Maven Wrapper** — et lite shell-script (og `.cmd`-variant for Windows) som følger med prosjektet. Første gang du kjører det, laster det ned den nøyaktige Maven-versjonen prosjektet er testet med (se `.mvn/wrapper/maven-wrapper.properties`) og bruker den for bygget. Det betyr at *alle* — du lokalt, medstudenten din, GitHub Actions-runnerne — bygger med samme Maven-versjon uten å måtte installere Maven manuelt. `./mvnw` er en drop-in erstatning for `mvn`, så alle kommandoer du kunne kjørt med `mvn` (`test`, `package`, `verify`, …) fungerer likt med `./mvnw`.
 
 ## Del 2 – Opprett et nytt GitHub-repo
 
