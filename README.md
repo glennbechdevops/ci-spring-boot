@@ -170,16 +170,6 @@ git config --global user.name  "Ola Nordmann"
 git config --global user.email "ola@example.com"
 ```
 
-### Sørg for at Git bruker HTTPS (viktig!)
-
-Codespaces har **ingen SSH-nøkkel** installert. Hvis du havner på en `git@github.com:...`-URL vil `git push` feile med `Permission denied (publickey)`. For å unngå dette:
-
-```shell
-gh config set git_protocol https
-```
-
-Dette gjør at `gh repo create` (og andre `gh`-kommandoer som setter opp remote) alltid bruker HTTPS-URLer. Kjør kommandoen én gang før du oppretter repoet under.
-
 ### Opprett repoet og push
 
 Du har to måter å gjøre dette på. **Alternativ A** er raskest hvis du bruker `gh`.
@@ -196,7 +186,7 @@ git branch -M main
 gh repo create ci-spring-boot-<initialer> --public --source=. --push
 ```
 
-Kommandoen oppretter repoet på GitHub-kontoen din, setter det som `origin` (med HTTPS-URL siden vi konfigurerte det over), og pusher `main` — alt i én sving.
+Kommandoen oppretter repoet på GitHub-kontoen din, setter det som `origin`, og pusher `main` — alt i én sving.
 
 **Alternativ B — opprett manuelt via web:**
 
