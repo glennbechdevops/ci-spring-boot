@@ -172,10 +172,6 @@ git config --global user.email "ola@example.com"
 
 ### Opprett repoet og push
 
-Du har to måter å gjøre dette på. **Alternativ A** er raskest hvis du bruker `gh`.
-
-**Alternativ A — la `gh` opprette og pushe i én kommando:**
-
 Fra rot-mappa av Spring-prosjektet:
 
 ```shell
@@ -187,24 +183,6 @@ gh repo create ci-spring-boot-<initialer> --public --source=. --push
 ```
 
 Kommandoen oppretter repoet på GitHub-kontoen din, setter det som `origin`, og pusher `main` — alt i én sving.
-
-**Alternativ B — opprett manuelt via web:**
-
-1. Gå til [github.com/new](https://github.com/new) og opprett et **tomt** repo (ikke huk av for README, .gitignore eller lisens – prosjektet fra Initializr har allerede dette).
-2. Kall det `ci-spring-boot-<dine initialer>`.
-3. På repo-siden, **kopier `HTTPS`-URLen** (ikke SSH). Den starter med `https://github.com/...`.
-4. Pushe eksisterende prosjekt:
-
-```shell
-git init
-git add .
-git commit -m "Initial commit from Spring Initializr"
-git branch -M main
-git remote add origin https://github.com/<ditt-brukernavn>/ci-spring-boot-<initialer>.git
-git push -u origin main
-```
-
-Første `push` vil trigge credential helperen (`gh` eller keychain). Har du satt opp `gh auth login`, går den rett gjennom.
 
 ## Del 3 – Sett opp branch protection på `main`
 
