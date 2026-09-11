@@ -21,6 +21,7 @@ Etter å ha fullført øvingen skal du kunne:
 * Sette opp **branch protection rules** for å hindre direkte push til `main`
 * Lage en **Pull Request**, be om review, og merge etter godkjenning
 * Skrive en enkel **GitHub Actions workflow** som bygger og tester et Maven-prosjekt
+* Bli komfortabel med **Git på kommandolinjen** — `git init`, `git add`, `git commit`, `git push`, `git checkout -b`, `git remote` — uten å måtte støtte deg på GUI-verktøy
 * Bruke **GitHub CLI (`gh`)** til å logge inn og opprette et nytt repo fra kommandolinjen (`gh auth login`, `gh repo create`)
 * Bruke **Codespaces multi-root workspaces** (`code -a`) for å jobbe med flere mapper samtidig i samme editor-vindu
 * Forstå hva **Maven Wrapper** (`./mvnw`) er, og hvorfor det gjør builds mer reproduserbare på tvers av maskiner og CI-systemer
