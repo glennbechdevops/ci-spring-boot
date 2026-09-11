@@ -5,8 +5,7 @@ I denne øvingen skal du:
 * Generere et nytt **Spring Boot**-prosjekt med **Spring Initializr**
 * Opprette et **eget GitHub-repo** og pushe koden dit
 * Sette opp **branch protection** på `main`
-* **Invitere en medstudent** som collaborator
-* Øve på **Pull Request-flyten** (feature branch → PR → review → merge)
+* Øve på **Pull Request-flyten** (feature branch → PR → merge)
 * Sette opp en **GitHub Actions workflow** som kjører **unit-tester** på hver PR og på hver push til `main`
 
 Målet er ikke å lære Spring Boot i dybden – vi bruker det kun som et konkret prosjekt å bygge og teste. Fokuset er på **arbeidsflyten** rundt kode: branching, code review, og kontinuerlig integrasjon (CI).
@@ -143,7 +142,7 @@ code -a /workspaces/ci-demo
 
 Du skal få en grønn build med minst én test (`contextLoads`) som passerer.
 
-> **Hva er `./mvnw`?** Det er **Maven Wrapper** — et lite shell-script (og `.cmd`-variant for Windows) som følger med prosjektet. Første gang du kjører det, laster det ned den nøyaktige Maven-versjonen prosjektet er testet med (se `.mvn/wrapper/maven-wrapper.properties`) og bruker den for bygget. Det betyr at *alle* — du lokalt, medstudenten din, GitHub Actions-runnerne — bygger med samme Maven-versjon uten å måtte installere Maven manuelt. `./mvnw` er en drop-in erstatning for `mvn`, så alle kommandoer du kunne kjørt med `mvn` (`test`, `package`, `verify`, …) fungerer likt med `./mvnw`.
+> **Hva er `./mvnw`?** Det er **Maven Wrapper** — et lite shell-script (og `.cmd`-variant for Windows) som følger med prosjektet. Første gang du kjører det, laster det ned den nøyaktige Maven-versjonen prosjektet er testet med (se `.mvn/wrapper/maven-wrapper.properties`) og bruker den for bygget. Det betyr at *alle* — du lokalt, andre du samarbeider med, GitHub Actions-runnerne — bygger med samme Maven-versjon uten å måtte installere Maven manuelt. `./mvnw` er en drop-in erstatning for `mvn`, så alle kommandoer du kunne kjørt med `mvn` (`test`, `package`, `verify`, …) fungerer likt med `./mvnw`.
 
 ## Del 2 – Opprett et nytt GitHub-repo
 
@@ -198,29 +197,19 @@ Resultat: repoet finnes på GitHub-kontoen din, `origin` er satt, og `main` er p
 
 ## Del 3 – Sett opp branch protection på `main`
 
-Vi vil hindre at noen (inkludert deg selv) pusher direkte til `main` uten en Pull Request og en godkjent review.
+Vi vil hindre at noen (inkludert deg selv) pusher direkte til `main` uten å gå via en Pull Request.
 
 1. Gå til `Settings` → `Branches` i repoet ditt.
 2. Under **Branch protection rules**, klikk **Add rule** (eller **Add branch ruleset** i nyere UI).
 3. Sett **Branch name pattern** til `main`.
 4. Huk av for følgende:
    * **Require a pull request before merging**
-     * **Require approvals** – minimum 1
    * **Require status checks to pass before merging** (vi legger til selve sjekken i Del 5)
-   * **Do not allow bypassing the above settings** (valgfritt, men anbefalt)
 5. Lagre.
 
 Prøv å pushe direkte til `main` etterpå – det skal feile med en melding om at branchen er beskyttet.
 
-## Del 4 – Inviter en medstudent og øv på Pull Requests
-
-### Inviter en collaborator
-
-1. `Settings` → `Collaborators` → **Add people**.
-2. Skriv inn GitHub-brukernavnet til medstudenten din.
-3. Medstudenten må akseptere invitasjonen fra e-post eller varsler på GitHub.
-
-Gjør det samme andre veien – la medstudenten invitere deg til sitt repo.
+## Del 4 – Øv på Pull Request-flyten
 
 ### Lag din første Pull Request
 
@@ -302,11 +291,7 @@ Gjør det samme andre veien – la medstudenten invitere deg til sitt repo.
    ```
 
 5. Gå til GitHub og opprett en **Pull Request** fra `feature/hello-endpoint` mot `main`.
-6. Be medstudenten din om å reviewe PR-en (bruk **Reviewers**-feltet).
-7. Medstudenten gjør en review og godkjenner den.
-8. Merge PR-en.
-
-Bytt roller og gjør det samme på medstudentens repo.
+6. Merge PR-en.
 
 ## Del 5 – Sett opp GitHub Actions workflow for CI
 
@@ -382,9 +367,16 @@ Utvid `ci.yml` med noe av følgende:
 * Legg til et lint-steg med **Checkstyle** eller **Spotless**
 * Kjør workflowen på flere Java-versjoner samtidig med en `matrix`-strategi
 
-## Bonusoppgave: Krev "Conversation resolution" og "Signed commits"
+## Bonusoppgave: Inviter en medstudent og øv på code review
 
-I branch protection kan du kreve at alle review-kommentarer er løst, og at commits er signert. Slå på disse og se hva som skjer når du prøver å merge en PR med uløste kommentarer.
+Slå deg sammen med en medstudent for å øve på ekte review-flyt.
+
+1. `Settings` → `Collaborators` → **Add people** — inviter medstudenten din med GitHub-brukernavnet deres. De må akseptere invitasjonen fra e-post/varsel.
+2. Skru på **Require approvals: 1** i branch protection-rulen for `main` (`Settings` → `Branches`).
+3. Lag en feature branch, gjør en liten endring, push og opprett en PR.
+4. Legg medstudenten som **Reviewer** på PR-en.
+5. Medstudenten reviewer, kommenterer, og godkjenner. Merge PR-en.
+6. Bytt roller: la medstudenten opprette PR i sitt repo og la deg reviewe.
 
 ## Referanser
 
