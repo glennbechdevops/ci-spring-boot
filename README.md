@@ -65,12 +65,14 @@ Klikk **Generate** og last ned zip-fila.
 >
 > ```shell
 > curl https://start.spring.io/starter.zip \
->   -d type=maven-project -d language=java -d bootVersion=3.3.4 \
+>   -d type=maven-project -d language=java \
 >   -d groupId=no.kristiania.cidemo -d artifactId=ci-demo \
 >   -d name=ci-demo -d packageName=no.kristiania.cidemo \
 >   -d javaVersion=21 -d dependencies=web \
 >   -o ci-demo.zip && unzip ci-demo.zip -d ci-demo
 > ```
+>
+> Uten `bootVersion` bruker Initializr default (siste stabile). Hvis du vil pinne versjon, se `https://start.spring.io/metadata/client` for aktuelle valg.
 
 Pakk ut innholdet i en tom mappe (lokalt eller i Codespace).
 
