@@ -95,13 +95,24 @@ Gå til **Spring Initializr**: [https://start.spring.io](https://start.spring.io
 * **Java**: 21 (eller den versjonen som er tilgjengelig i Codespaces)
 * **Dependencies**: `Spring Web`
 
-Klikk **Generate** og last ned zip-fila.
+Klikk **Generate**. Nettleseren laster ned en zip-fil som heter `ci-demo.zip`.
 
 ### Legg prosjektet ved siden av fork-en (ikke inni!)
 
 Se advarselen om to git-repoer over. Prosjektet skal legges i `/workspaces/ci-demo/`, **sidestilt** med `/workspaces/ci-spring-boot/` — ikke inne i fork-en.
 
-I Codespaces-terminalen:
+1. **Drag & drop** zip-fila fra nedlastings-mappa inn i Explorer-panelet i Codespace-vinduet. Slipp den på **`/workspaces/`**-mappa (ikke på fork-mappa). Fila lastes opp til `/workspaces/ci-demo.zip`.
+2. Pakk ut zip-en fra terminalen:
+
+   ```shell
+   cd /workspaces
+   unzip ci-demo.zip -d ci-demo
+   cd ci-demo
+   ```
+
+3. Bekreft at det ligger `pom.xml`, `mvnw` og `src/` inne i `/workspaces/ci-demo/`.
+
+> **Pro tips:** Vil du hoppe over nettleser-runden, kan du hente prosjektet direkte i Codespaces-terminalen med `curl` mot Initializr sitt API. `-d`-flaggene sender de samme feltene som du fyller inn i Initializr-web-en (som HTTP form data), og uten `bootVersion` bruker Initializr default (siste stabile).
 
 ```shell
 cd /workspaces
@@ -114,10 +125,6 @@ curl https://start.spring.io/starter.zip \
 unzip ci-demo.zip -d ci-demo
 cd ci-demo
 ```
-
-> Uten `bootVersion` bruker Initializr default (siste stabile). Hvis du vil pinne versjon, se `https://start.spring.io/metadata/client` for aktuelle valg.
-
-Har du lastet ned zip-fila via nettleseren i stedet, drag'n'drop den inn i Codespace-vinduet — eller last opp til `/workspaces/` og pakk ut der. **Ikke** la den havne i `/workspaces/ci-spring-boot/`.
 
 ### Gjør `ci-demo/` synlig i fil-treet
 
@@ -143,11 +150,7 @@ Du skal få en grønn build med minst én test (`contextLoads`) som passerer.
 
 ### Autentisering mot GitHub (viktig!)
 
-Før du kan pushe kode, må Git kunne bevise til GitHub at det er *deg* som pusher. I et helt ferskt Codespace har du **ikke** SSH-nøkler satt opp, og passord-innlogging over HTTPS ble deaktivert av GitHub for flere år siden. Derfor må du bruke ett av alternativene under.
-
-**Anbefalt (Codespaces og lokalt): bruk `gh` CLI**
-
-`gh` (GitHub CLI) er forhåndsinstallert i Codespaces og på de fleste utviklermaskiner.
+Før du kan pushe kode, må Git kunne bevise til GitHub at det er *deg* som pusher. I et helt ferskt Codespace har du **ikke** SSH-nøkler satt opp, og passord-innlogging over HTTPS ble deaktivert av GitHub for flere år siden. Vi bruker `gh` (GitHub CLI) — den er forhåndsinstallert i Codespaces og på de fleste utviklermaskiner.
 
 > **NB (Codespaces):** Codespace-en har allerede en `GITHUB_TOKEN`-env-var satt som er scopet til fork-en. `gh` vil bruke den og hoppe over innlogging — men den tokenet får ikke opprette et nytt repo på kontoen din. Fjern den først:
 >
