@@ -1,4 +1,4 @@
-# CI for Spring Boot med GitHub Actions
+# Kontinuerlig integrasjon med Spring Boot og GitHub Actions
 
 I denne øvingen skal du:
 
