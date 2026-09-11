@@ -193,6 +193,26 @@ git push -u origin main
 
 Første `push` vil trigge credential helperen (`gh` eller keychain). Har du satt opp `gh auth login`, går den rett gjennom.
 
+### Feilsøking: `Permission denied (publickey)` ved push
+
+Får du denne feilen:
+
+```
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+```
+
+…så er remoten din satt opp med **SSH** (`git@github.com:...`), men Codespaces har ingen SSH-nøkkel installert. Fiksen er å bytte remoten til **HTTPS**:
+
+```shell
+git remote -v                                                          # sjekk gjeldende URL
+git remote set-url origin https://github.com/<brukernavn>/<repo>.git   # bytt til HTTPS
+git remote -v                                                          # verifiser
+git push -u origin main
+```
+
+Samme feil kan komme fra `gh repo create` hvis `gh` er konfigurert med SSH som protokoll. Sjekk med `gh config get git_protocol` — sett den til `https` med `gh config set git_protocol https` hvis nødvendig.
+
 ## Del 3 – Sett opp branch protection på `main`
 
 Vi vil hindre at noen (inkludert deg selv) pusher direkte til `main` uten en Pull Request og en godkjent review.
