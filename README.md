@@ -163,24 +163,6 @@ Velg:
 
 Etter dette har Git en credential helper som automatisk sender en gyldig token ved hver `git push` — du slipper å taste noe mer.
 
-**Alternativ: Personal Access Token (PAT)**
-
-Hvis du foretrekker å ikke bruke `gh`:
-
-1. Gå til [github.com/settings/tokens](https://github.com/settings/tokens) → **Generate new token (classic)**.
-2. Gi den scope `repo`.
-3. Kopier tokenet (du får se det bare én gang).
-4. Ved neste `git push` bruker du **brukernavnet ditt** og **tokenet i stedet for passord**.
-5. Slå på credential-cache så du slipper å taste den hver gang:
-
-   ```shell
-   git config --global credential.helper store   # lagrer i klartekst i ~/.git-credentials
-   # eller på Mac:
-   git config --global credential.helper osxkeychain
-   ```
-
-> **NB:** SSH (`git@github.com:...`) fungerer også — men krever at du har generert et SSH-nøkkelpar (`ssh-keygen`) og lagt den offentlige nøkkelen inn på GitHub-kontoen din under `Settings → SSH and GPG keys`. Dette er ikke satt opp i et ferskt Codespace.
-
 ### Sett git-identiteten din (bare første gang)
 
 ```shell
