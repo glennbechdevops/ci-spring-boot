@@ -101,10 +101,13 @@ Klikk **Generate**. Nettleseren laster ned en zip-fil som heter `ci-demo.zip`.
 
 Se advarselen om to git-repoer over. Prosjektet skal legges i `/workspaces/ci-demo/`, **sidestilt** med `/workspaces/ci-spring-boot/` — ikke inne i fork-en.
 
-1. **Drag & drop** zip-fila fra nedlastings-mappa inn i Explorer-panelet i Codespace-vinduet. Slipp den på **`/workspaces/`**-mappa (ikke på fork-mappa). Fila lastes opp til `/workspaces/ci-demo.zip`.
-2. Pakk ut zip-en fra terminalen:
+Explorer-panelet i Codespaces viser bare fork-en, så du kan ikke drage rett inn i `/workspaces/`. Slipp zip-en i fork-mappa, flytt den ett hakk opp i terminalen, og pakk ut:
+
+1. **Drag & drop** `ci-demo.zip` fra nedlastings-mappa inn i Explorer-panelet i Codespace-vinduet. Fila havner i `/workspaces/ci-spring-boot/ci-demo.zip`.
+2. Flytt zip-en ut av fork-en og pakk ut i terminalen:
 
    ```shell
+   mv /workspaces/ci-spring-boot/ci-demo.zip /workspaces/
    cd /workspaces
    unzip ci-demo.zip -d ci-demo
    cd ci-demo
