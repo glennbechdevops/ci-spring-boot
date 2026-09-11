@@ -126,7 +126,7 @@ VS Code / Codespaces viser bare workspace-roten (fork-en) i Explorer-panelet, s�
 code -a /workspaces/ci-demo
 ```
 
-Nå ser du begge mappene sidestilt i Explorer, og kan åpne filer i `ci-demo/` med musa som normalt.
+`-a` er kortformen for `--add` — den *legger til* mappa i workspacet uten å bytte hovedmappe eller reloade vinduet. Nå ser du begge mappene sidestilt i Explorer, og kan åpne filer i `ci-demo/` med musa som normalt.
 
 ### Verifiser at du står i riktig mappe
 
@@ -199,7 +199,13 @@ git branch -M main
 gh repo create ci-spring-boot-ditt-navn --public --source=. --push
 ```
 
-Bytt `ditt-navn` med noe unikt (f.eks. `ci-spring-boot-ola`). Kommandoen oppretter repoet på GitHub-kontoen din, setter det som `origin`, og pusher `main` — alt i én sving.
+Bytt `ditt-navn` med noe unikt (f.eks. `ci-spring-boot-ola`). Flaggene til `gh repo create`:
+
+* `--public` — repoet blir offentlig. Bruk `--private` hvis du heller vil ha det privat.
+* `--source=.` — bruk gjeldende mappe som kilde. `gh` finner den lokale `.git/`-mappa og setter opp riktig `origin`-remote.
+* `--push` — push `main` opp til det nye repoet umiddelbart etter opprettelse.
+
+Resultat: repoet finnes på GitHub-kontoen din, `origin` er satt, og `main` er pushet — alt i én kommando.
 
 ## Del 3 – Sett opp branch protection på `main`
 
@@ -295,6 +301,8 @@ Gjør det samme andre veien – la medstudenten invitere deg til sitt repo.
    ```shell
    ./mvnw --batch-mode test
    ```
+
+   `--batch-mode` (kortform `-B`) skrur av interaktiv output og fargede tegn. Kjekt i CI og i terminaler der du vil ha kortfattet, maskin-lesbar logg. Kan droppes lokalt — `./mvnw test` alene fungerer også.
 
 4. Commit og push branchen:
 
