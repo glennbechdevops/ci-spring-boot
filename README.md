@@ -150,7 +150,50 @@ Gjør det samme andre veien – la medstudenten invitere deg til sitt repo.
    }
    ```
 
-3. Skriv en enkel unit-test for controlleren (f.eks. med `@WebMvcTest`).
+3. Skriv en enkel test for controlleren. Legg fila her: `src/test/java/no/kristiania/cidemo/HelloControllerTest.java`:
+
+   ```java
+   package no.kristiania.cidemo;
+
+   import org.junit.jupiter.api.Test;
+   import org.springframework.beans.factory.annotation.Autowired;
+   import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+   import org.springframework.test.web.servlet.MockMvc;
+
+   import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+   import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+   import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+   @WebMvcTest(HelloController.class)
+   class HelloControllerTest {
+
+       @Autowired
+       MockMvc mockMvc;
+
+       @Test
+       void helloReturnsGreeting() throws Exception {
+           mockMvc.perform(get("/hello"))
+                  .andExpect(status().isOk())
+                  .andExpect(content().string("Hei fra CI-øvingen!"));
+       }
+   }
+   ```
+
+   **Hva er `@WebMvcTest`?**
+
+   Spring Boot har flere «test-slicer» — annotasjoner som starter opp *bare den delen* av applikasjonen du trenger for en gitt test. `@WebMvcTest` er slicen for web-laget:
+
+   * Den starter **ikke** hele Spring Boot-appen (som `@SpringBootTest` gjør). Ingen database, ingen service-beans, ingen fullversjons-context.
+   * Den laster kun controlleren du peker på (`HelloController.class`), pluss Spring MVC-infrastrukturen rundt (routing, JSON-serialisering, filter osv.).
+   * Du får inn en **`MockMvc`** som lar deg sende falske HTTP-requests og gjøre assertions på responsen — uten å faktisk starte en Tomcat-server på en port.
+   * Resultat: testen er **rask** (starter på ms, ikke sekunder) og fokusert — du tester controlleren, ikke hele appen.
+
+   Kjør testen lokalt før du pusher:
+
+   ```shell
+   ./mvnw --batch-mode test
+   ```
+
 4. Commit og push branchen:
 
    ```shell
@@ -215,7 +258,10 @@ jobs:
 
 Gå tilbake til `Settings` → `Branches` → rulen for `main`:
 
-* Under **Require status checks to pass before merging**, søk opp og velg `build-and-test`.
+* Under **Require status checks to pass before merging**, søk opp og velg **`build-and-test`**.
+  * Det du søker etter her er **navnet på jobben** i workflowen — altså nøkkelen under `jobs:` i `ci.yml` (i vårt tilfelle `build-and-test`). Det er **ikke** navnet på workflowen (`name: CI`) eller navnet på et enkeltsteg.
+  * Merk: søkefeltet finner bare status-checks som GitHub har sett minst én gang. Har workflowen aldri kjørt mot dette repoet, får du ingen treff. Kjør PR-en fra forrige seksjon først.
+  * *(Beklager på GitHub sine vegne at denne UX-en er litt dårlig — det er ikke opplagt at det er jobb-navnet du skal søke etter, og feltet gir null hint hvis workflowen ikke har kjørt ennå.)*
 * Lagre.
 
 Nå kan ingen PR merges før testene har passert.
