@@ -35,15 +35,7 @@ Dette er en klassisk felle som *kommer* til å forvirre deg om du ikke er obs p�
 | 1 | **Din fork** (`ci-spring-boot`) | `/workspaces/ci-spring-boot/` | README-en du leser nå, `.devcontainer/`, og eksempel-workflowen. **Ikke push endringer hit.** |
 | 2 | **Ditt nye Spring Boot-repo** (`ci-spring-boot-<initialer>`) | `/workspaces/ci-demo/` | Selve Spring Boot-prosjektet du lager i Del 1. **Det er her all koden din, PR-ene, branch protection og CI skal leve.** |
 
-### Hvorfor må de være sidestilte, ikke nøstet?
-
-Hvis du pakker ut Spring Boot-prosjektet **inne i** fork-en (f.eks. `/workspaces/ci-spring-boot/ci-demo/`) havner du i en felle:
-
-* Git ser oppover i mappetreet etter en `.git/`. Hvis du glemmer `git init` i `ci-demo/`, vil `git status`, `git add`, `git commit`, `git remote -v` osv. treffe **fork-ens** git-repo — uten at du merker det. Du kan ende med å commite Spring Boot-koden inn i fork-en.
-* `gh repo create --source=. --push` fra feil katalog vil legge til remote og pushe til feil sted.
-* Selv med `git init` i undermappa er dette et nøstet git-repo, som er et minefelt (ekskluderinger, submodule-forvirring, feilklikk i IDE).
-
-**Regelen:** hold repo 2 utenfor repo 1. Del 1 forteller deg eksakt hvor du skal legge det (`/workspaces/ci-demo/`).
+Legger du Spring Boot-prosjektet **inne i** fork-en, går git-kommandoene lett til feil repo — git leter oppover i mappetreet og treffer fork-ens `.git/` uten at du merker det. Hold repo 2 utenfor repo 1. Del 1 forteller deg hvor du skal legge det (`/workspaces/ci-demo/`).
 
 ### Sjekk hvor du er før du gjør noe med Git
 
@@ -56,18 +48,9 @@ Ser du `github.com:<lærer>/ci-spring-boot` i output, er du i fork-en. Ser du `g
 
 ## Lag en fork
 
-### Hva er en fork?
+En **fork** er din egen kopi av et repo på GitHub. Du trenger en for å kunne starte en Codespace og endre filer uten å påvirke originalen.
 
-En **fork** er en personlig kopi av et GitHub-repo som ligger på **din** GitHub-konto. Den er en fullverdig, uavhengig kopi — du kan pushe til den, opprette branches, lage Pull Requests og gi andre tilgang, uten at det påvirker det opprinnelige (upstream) repoet på noen måte.
-
-* En **fork** er noe GitHub lager for deg med ett klikk. Den lever på GitHub-serverne.
-* En **klone** er en lokal kopi på din maskin (eller i et Codespace), laget med `git clone`. Klonen henter innhold fra ett bestemt repo — enten upstream eller din fork.
-
-Vi bruker en fork her fordi du trenger et repo du **eier**, slik at du kan starte en Codespace fra det, endre filer, og få tilgang til devcontaineren i denne øvingen — uten å påvirke lærerens original.
-
-### Slik gjør du det
-
-Gå til dette repoet på GitHub og klikk **Fork**-knappen øverst til høyre. Velg din egen konto som destinasjon. Etter noen sekunder har du en identisk kopi liggende under `github.com/<ditt-brukernavn>/ci-spring-boot`.
+Klikk **Fork**-knappen øverst til høyre på dette repoet og velg din egen konto som destinasjon.
 
 ## Start et Codespace
 
