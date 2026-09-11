@@ -145,6 +145,14 @@ Før du kan pushe kode, må Git kunne bevise til GitHub at det er *deg* som push
 
 `gh` (GitHub CLI) er forhåndsinstallert i Codespaces og på de fleste utviklermaskiner.
 
+> **NB (Codespaces):** Codespace-en har allerede en `GITHUB_TOKEN`-env-var satt som er scopet til fork-en. `gh` vil bruke den og hoppe over innlogging — men den tokenet får ikke opprette et nytt repo på kontoen din. Fjern den først:
+>
+> ```shell
+> unset GITHUB_TOKEN
+> ```
+>
+> Kjenner du igjen meldingen «The value of the GITHUB_TOKEN environment variable is being used for authentication», er det denne du må fjerne.
+
 ```shell
 gh auth login
 ```
