@@ -20,30 +20,39 @@ Etter å ha fullført øvelsen skal du kunne:
 * Lage en **Pull Request**, be om review, og merge etter godkjenning
 * Skrive en enkel **GitHub Actions workflow** som bygger og tester et Maven-prosjekt
 
-## ⚠️ Viktig: Vi jobber med to Git-repoer i denne øvingen
+## ⚠️ Viktig: Vi jobber med to Git-repoer i denne øvingen — hold dem adskilt!
 
-Dette er en klassisk felle som *kommer* til å forvirre deg om du ikke er obs på det fra start. I løpet av øvingen jobber du med **to helt separate GitHub-repoer**, som ligger i to forskjellige mapper:
+Dette er en klassisk felle som *kommer* til å forvirre deg om du ikke er obs på det fra start. I løpet av øvingen jobber du med **to helt separate GitHub-repoer**, og de skal ligge i **to sidestilte mapper** — ikke den ene inne i den andre:
 
-| # | Repo | Mappe (i Codespace) | Hva ligger her? |
-|---|------|---------------------|-----------------|
-| 1 | **Din fork av dette repoet** (`ci-spring-boot`) | `/workspaces/ci-spring-boot/` | README-en du leser nå, `.devcontainer/`, og eksempel-workflowen. **Dette pusher du _ikke_ endringer til.** |
-| 2 | **Ditt nye Spring Boot-repo** (`ci-spring-boot-<initialer>`) | `/workspaces/ci-spring-boot/ci-demo/` (eller lignende, alt etter hvor du pakket ut zip-fila) | Selve Spring Boot-prosjektet du lager i Del 1. **Det er her all koden din, PR-ene, branch protection og CI skal leve.** |
+```
+/workspaces/
+├── ci-spring-boot/     ← Repo 1: din fork (bare for README + devcontainer)
+└── ci-demo/            ← Repo 2: ditt nye Spring Boot-prosjekt
+```
 
-**Konsekvenser du må være våken på:**
+| # | Repo | Mappe | Hva ligger her? |
+|---|------|-------|-----------------|
+| 1 | **Din fork** (`ci-spring-boot`) | `/workspaces/ci-spring-boot/` | README-en du leser nå, `.devcontainer/`, og eksempel-workflowen. **Ikke push endringer hit.** |
+| 2 | **Ditt nye Spring Boot-repo** (`ci-spring-boot-<initialer>`) | `/workspaces/ci-demo/` | Selve Spring Boot-prosjektet du lager i Del 1. **Det er her all koden din, PR-ene, branch protection og CI skal leve.** |
 
-* Når du kjører `git`-kommandoer, må du stå i **riktig mappe**. `git status` inne i `ci-demo/` snakker om repo 2. `git status` ett hakk opp snakker om repo 1.
-* Første gang du kjører `git init` inne i `ci-demo/`, lager du et **nytt, uavhengig** git-repo — det arver ingenting fra fork-en. Det er akkurat det vi vil.
-* `.github/workflows/ci.yml` du lager i Del 5 skal ligge i **repo 2**, ikke i fork-en.
-* `gh repo create ...` i Del 2 lager en helt ny GitHub-repo — ikke bland det sammen med fork-en.
+### Hvorfor må de være sidestilte, ikke nøstet?
 
-**Sjekk hvor du er før du gjør noe med Git:**
+Hvis du pakker ut Spring Boot-prosjektet **inne i** fork-en (f.eks. `/workspaces/ci-spring-boot/ci-demo/`) havner du i en fella:
+
+* Git ser oppover i mappetreet etter en `.git/`. Hvis du glemmer `git init` i `ci-demo/`, vil `git status`, `git add`, `git commit`, `git remote -v` osv. treffe **fork-ens** git-repo — uten at du merker det. Du kan ende med å commite Spring Boot-koden inn i fork-en.
+* `gh repo create --source=. --push` fra feil katalog vil legge til remote og pushe til feil sted.
+* Selv med `git init` i undermappa er dette et nøstet git-repo, som er et minefelt (ekskluderinger, submodule-forvirring, feilklikk i IDE).
+
+**Reglen:** hold repo 2 utenfor repo 1. Del 1 forteller deg eksakt hvor du skal legge det (`/workspaces/ci-demo/`).
+
+### Sjekk hvor du er før du gjør noe med Git
 
 ```shell
 pwd                # Hvilken mappe står jeg i?
 git remote -v      # Hvilket GitHub-repo peker denne mappa på?
 ```
 
-Ser du `github.com:<lærer>/ci-spring-boot` i output, er du i fork-en. Ser du `github.com:<deg>/ci-spring-boot-<initialer>`, er du i ditt eget repo.
+Ser du `github.com:<lærer>/ci-spring-boot` i output, er du i fork-en. Ser du `github.com:<deg>/ci-spring-boot-<initialer>`, er du i ditt eget repo. Ser du **ingenting** i `git remote -v` fra `ci-demo/` før du har lagt til remote — det er som forventet.
 
 ## Lag en fork
 
@@ -88,20 +97,41 @@ Gå til **Spring Initializr**: [https://start.spring.io](https://start.spring.io
 
 Klikk **Generate** og last ned zip-fila.
 
-> **Tips:** Du kan også laste ned prosjektet direkte i Codespaces-terminalen. Eksempel:
->
-> ```shell
-> curl https://start.spring.io/starter.zip \
->   -d type=maven-project -d language=java \
->   -d groupId=no.kristiania.cidemo -d artifactId=ci-demo \
->   -d name=ci-demo -d packageName=no.kristiania.cidemo \
->   -d javaVersion=21 -d dependencies=web \
->   -o ci-demo.zip && unzip ci-demo.zip -d ci-demo
-> ```
->
+### Legg prosjektet ved siden av fork-en (ikke inni!)
+
+Se advarselen om to git-repoer over. Prosjektet skal legges i `/workspaces/ci-demo/`, **sidestilt** med `/workspaces/ci-spring-boot/` — ikke inne i fork-en.
+
+I Codespaces-terminalen:
+
+```shell
+cd /workspaces
+curl https://start.spring.io/starter.zip \
+  -d type=maven-project -d language=java \
+  -d groupId=no.kristiania.cidemo -d artifactId=ci-demo \
+  -d name=ci-demo -d packageName=no.kristiania.cidemo \
+  -d javaVersion=21 -d dependencies=web \
+  -o ci-demo.zip
+unzip ci-demo.zip -d ci-demo
+cd ci-demo
+```
+
 > Uten `bootVersion` bruker Initializr default (siste stabile). Hvis du vil pinne versjon, se `https://start.spring.io/metadata/client` for aktuelle valg.
 
-Pakk ut innholdet i en tom mappe (lokalt eller i Codespace).
+Har du lastet ned zip-fila via nettleseren i stedet, drag'n'drop den inn i Codespace-vinduet — eller last opp til `/workspaces/` og pakk ut der. **Ikke** la den havne i `/workspaces/ci-spring-boot/`.
+
+### Verifiser at du står i riktig mappe
+
+```shell
+pwd
+# skal si: /workspaces/ci-demo
+
+ls -la
+# skal vise pom.xml, mvnw, src/  — men INGEN .git/ (kommer i Del 2)
+
+git rev-parse --show-toplevel 2>&1
+# skal si: "fatal: not a git repository" — det er riktig, vi lager repoet i Del 2.
+# Sier den derimot "/workspaces/ci-spring-boot", har du havnet inne i fork-en. Flytt prosjektet ut før du fortsetter.
+```
 
 ### Verifiser at prosjektet bygger
 
