@@ -113,6 +113,16 @@ cd ci-demo
 
 Har du lastet ned zip-fila via nettleseren i stedet, drag'n'drop den inn i Codespace-vinduet — eller last opp til `/workspaces/` og pakk ut der. **Ikke** la den havne i `/workspaces/ci-spring-boot/`.
 
+### Gjør `ci-demo/` synlig i fil-treet
+
+VS Code / Codespaces viser bare workspace-roten (fork-en) i Explorer-panelet, så `/workspaces/ci-demo/` er på disk men usynlig i sidepanelet. Legg den til som ekstra rot-mappe:
+
+```shell
+code -a /workspaces/ci-demo
+```
+
+Nå ser du begge mappene sidestilt i Explorer, og kan åpne filer i `ci-demo/` med musa som normalt.
+
 ### Verifiser at du står i riktig mappe
 
 ```shell
