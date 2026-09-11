@@ -32,6 +32,7 @@ Dette repoet har en **devcontainer** (se `.devcontainer/devcontainer.json`) som 
 
 * **JDK 21** (Temurin) – for å kompilere og kjøre Java-koden
 * **Maven** – byggeverktøyet vi bruker for å bygge Spring Boot-prosjektet
+* **GitHub CLI (`gh`)** – kommandolinjeverktøy for GitHub. Vi bruker det til å autentisere Git mot GitHub og til å opprette repo direkte fra terminalen (se Del 2).
 
 Første gang Codespacet startes tar det noen minutter å bygge miljøet.
 
@@ -42,9 +43,10 @@ Sjekk at alt er på plass ved å kjøre følgende i terminalen:
 ```shell
 java -version
 mvn -version
+gh --version
 ```
 
-Du skal få et versjonsnummer tilbake for begge. Får du "command not found" er devcontaineren ikke ferdig bygget, eller bygget feilet – sjekk loggen fra "Codespaces: View Creation Log".
+Du skal få et versjonsnummer tilbake for alle tre. Får du "command not found" er devcontaineren ikke ferdig bygget, eller bygget feilet – sjekk loggen fra "Codespaces: View Creation Log".
 
 ## Del 1 – Generer prosjektet med Spring Initializr
 
@@ -360,3 +362,5 @@ I branch protection kan du kreve at alle review-kommentarer er løst, og at comm
 * [GitHub Actions – dokumentasjon](https://docs.github.com/en/actions)
 * [About protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)
 * [setup-java action](https://github.com/actions/setup-java)
+* [GitHub CLI (`gh`) – manual](https://cli.github.com/manual/)
+* [`gh auth login`](https://cli.github.com/manual/gh_auth_login)

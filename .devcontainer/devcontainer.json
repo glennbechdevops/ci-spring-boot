@@ -6,7 +6,8 @@
       "version": "none",
       "installMaven": "true",
       "mavenVersion": "3.9.9"
-    }
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "customizations": {
     "vscode": {
@@ -16,5 +17,5 @@
       ]
     }
   },
-  "postCreateCommand": "java -version && mvn -version"
+  "postCreateCommand": "java -version && mvn -version && gh --version"
 }
